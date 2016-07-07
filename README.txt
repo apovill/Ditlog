@@ -1,4 +1,4 @@
-Ditlog V0.1.1
+Ditlog V0.0.1
 
 Author:
 Andrew Povill
@@ -17,7 +17,7 @@ It also should make more use of dictionaries and cleaner more 'python' code, esp
 I make no promises as to the naming style being consistent, but I tried.
 
 The program is useful enough to generate logs for the most common camera type and lets you efficiently lookup metadata in a human readable format for any specific clip,
-so that said, it's good enough to call a Version 0.1.1.
+so that said, it's good enough to call a Version 0.0.1.
 
 It's written with the perspective of a DIT to generate a quick log on set, bookkeeping.
 
