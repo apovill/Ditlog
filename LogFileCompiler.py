@@ -63,7 +63,6 @@ class LogGenerator(object):
             print "No card was added to log"
         else:
             self.cards.append(card)
-            print len(self.cards)
             if len(self.cards)==1:
                 self.writeFirstRoll(card)
                 self.writeNewCamera(card)
@@ -98,7 +97,6 @@ class LogGenerator(object):
     def writeFirstRoll(self, card):
         
         curlines = []
-        print card.getRoll()
         with open(self.logpath+self.logname, 'r+') as f:
             
             for line in f:
@@ -119,17 +117,18 @@ class LogGenerator(object):
         with open(self.logpath+self.logname, 'r+') as f:
             for line in f:
                 curlines.append(line)
-                if  line == lastwrittenroll+'\n':
+                if  lastwrittenroll in line and '_' not in line:
                     curlines.append(card.getRoll()+'\n')
             f.seek(0,0)
             for line in curlines:
                 f.write(line)
     
     def writeClipNames(self, card):
-        
+        print type(card)
+        print card.getClipNames()
         with open(self.logpath+self.logname, 'a') as f:
             for names in card.getClipNames():
-                if names is card.getClipNames()[0]:
+                if names == card.getClip(1).getClipName():
                     f.write(names+'\t'+card.getRoll()+'\t\t\t\t\t\n')
                 else:
                     f.write(names+'\t\t\t\t\t\t\n')
@@ -189,12 +188,12 @@ class CardLoader(object):
     def findMetaData(self, filepaths):
         if self.mtool.checkNotRed(filepaths):
             return self.mtool.alexaMetaExtract(filepaths)
-        return self.mtool.redMetaExtract()
+        return self.mtool.redMetaExtract(filepaths)
     
     def fileMatch(self, meta, filenames):
         ans = []
-        for line in meta:
-            for filename in filenames:
+        for filename in filenames:
+            for line in meta:
                 if filename in line:
                     ans.append(filename)
         return ans
@@ -208,7 +207,8 @@ class CardLoader(object):
         card = []
         for clipn in names:
             for metalist in cleanmeta:
-                if clipn in metalist:
+                if clipn in metalist and len(clipn) >0 :
                     newclip = Clip(clipn, metalist)
                     card.append(newclip)
+                    break
         return card
