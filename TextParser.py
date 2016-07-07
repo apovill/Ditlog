@@ -42,8 +42,8 @@ class MetaTool(object):
         f.close()
         return metafile
     
-    def redMetaExtract(self): 
-        print 'Red'
+    def redMetaExtract(self, filepaths): 
+        print 
         return 1
     
     def findMetaArgs(self, meta):
